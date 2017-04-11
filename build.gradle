@@ -12,6 +12,7 @@ repositories {
 dependencies {
     compile 'org.hibernate:hibernate-core:5.1.0.Final'
     compile 'com.h2database:h2:1.4.191'
-    compile 'javax.transaction:jta:1.1'
+    compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
+    compile 'javax.transaction:jta'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
