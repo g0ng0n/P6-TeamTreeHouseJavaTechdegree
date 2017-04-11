@@ -1,8 +1,14 @@
 package com.gongon.analize.model;
 
+import com.sun.istack.internal.NotNull;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 /**
  * Created by g0ng0n.
@@ -11,13 +17,21 @@ public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    @Size(min = 1, max=3)
     private String code;
 
+    @Column(name = "name")
+    @Size(min = 1, max=32)
     private String name;
 
-    private int internetUsers;
+    @Column(name = "Internet Users")
+    @Digits(integer=11, fraction=8)
+    private BigDecimal internetUsers;
 
-    private int adultLiteracyRate;
+    @Column(name = "Literacy")
+    @Digits(integer=11, fraction=8)
+    private BigDecimal adultLiteracyRate;
 
     public String getCode() {
         return code;
@@ -35,22 +49,13 @@ public class Country {
         this.name = name;
     }
 
-    public int getInternetUsers() {
+    public BigDecimal getInternetUsers() {
         return internetUsers;
     }
 
-    public void setInternetUsers(int internetUsers) {
-        this.internetUsers = internetUsers;
-    }
-
-    public int getAdultLiteracyRate() {
+    public BigDecimal getAdultLiteracyRate() {
         return adultLiteracyRate;
     }
-
-    public void setAdultLiteracyRate(int adultLiteracyRate) {
-        this.adultLiteracyRate = adultLiteracyRate;
-    }
-
 
     @Override
     public String toString() {
