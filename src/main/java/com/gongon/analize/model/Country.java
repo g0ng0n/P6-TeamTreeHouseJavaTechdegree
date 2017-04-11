@@ -33,6 +33,19 @@ public class Country {
     @Digits(integer=11, fraction=8)
     private BigDecimal adultLiteracyRate;
 
+    // default constructor
+    public Country(){
+
+    }
+
+    public Country(CountryBuilder builder){
+
+        this.code = builder.code;
+        this.name = builder.name;
+        this.internetUsers = builder.internetUsers;
+        this.adultLiteracyRate = builder.adultLiteracyRate;
+    }
+
     public String getCode() {
         return code;
     }
@@ -65,5 +78,43 @@ public class Country {
                 ", internetUsers=" + internetUsers +
                 ", adultLiteracyRate=" + adultLiteracyRate +
                 '}';
+    }
+
+
+
+    public static class CountryBuilder {
+
+        private String code;
+
+        private String name;
+
+        private BigDecimal internetUsers;
+
+        private BigDecimal adultLiteracyRate;
+
+        public CountryBuilder(String code){
+            this.code = code;
+        }
+
+
+        public CountryBuilder withName(String name){
+            this.name = name;
+            return this;
+        }
+
+        public CountryBuilder withInternetUsers(BigDecimal internetUsers){
+            this.internetUsers = internetUsers;
+            return this;
+        }
+
+        public CountryBuilder withAdultLiteracyRate( BigDecimal adultLiteracyRate){
+            this.adultLiteracyRate = adultLiteracyRate;
+            return this;
+        }
+
+        public Country build(){
+            return new Country(this);
+        }
+
     }
 }
