@@ -2,10 +2,7 @@ package com.gongon.analize.model;
 
 import com.sun.istack.internal.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -13,6 +10,7 @@ import java.math.BigDecimal;
 /**
  * Created by g0ng0n.
  */
+@Entity
 public class Country {
 
     @Id
@@ -21,15 +19,15 @@ public class Country {
     @Size(min = 1, max=3)
     private String code;
 
-    @Column(name = "name")
+    @Column
     @Size(min = 1, max=32)
     private String name;
 
-    @Column(name = "Internet Users")
+    @Column
     @Digits(integer=11, fraction=8)
     private BigDecimal internetUsers;
 
-    @Column(name = "Literacy")
+    @Column
     @Digits(integer=11, fraction=8)
     private BigDecimal adultLiteracyRate;
 

@@ -1,5 +1,7 @@
 package com.gongon.analize;
 
+import com.gongon.analize.dao.CountryDao;
+import com.gongon.analize.dao.implementation.CountryDaoImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,43 +16,38 @@ import java.util.List;
  * Created by g0ng0n.
  */
 public class Application {
-    // holds a reusable reference to aSession Factory (since we need only one)
-    private static final SessionFactory sessionFactory = buildSessionFactory();
 
-    private static SessionFactory buildSessionFactory() {
-
-        //create a StandardServiceRegistry
-        final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        return new MetadataSources(registry).buildMetadata().buildSessionFactory();
-
-    }
 
     public static void main (String[] args){
 
+        showAllContacts();
 
-        for(Country c : fetchAllContacts()){
-
-            System.out.println(c);
-        }
 
     }
 
 
 
-    @SuppressWarnings("unchecked")
-    private static List<Country> fetchAllContacts(){
-        // Open session
-        Session session = sessionFactory.openSession();
+    private static void showAllContacts(){
 
-        // Create a criteria Object
-        Criteria criteria = session.createCriteria(Country.class);
+        CountryDao dao = new CountryDaoImpl();
+        List<Country> countries = dao.fetchAllContacts();
 
-        // Get a List of countries objeccts according to the crietria object
-        List<Country> countries = criteria.list();
+        String leftAlignFormat = "| %-4s | %-30s | %-14s | %-8s |%n";
 
-        // Close session
-        session.close();
-        return countries;
+        System.out.format("+------+--------------------------------+----------------+----------+%n");
+        System.out.format("| Code | Country                        | Internet Users | Literacy |%n");
+        System.out.format("+------+--------------------------------+----------------+----------+%n");
+        for (Country c : countries) {
+
+            System.out.format(
+                    leftAlignFormat,
+                    c.getCode(),
+                    c.getName(),
+                    c.getInternetUsers() == null ? "--" : String.format("%.2f", c.getInternetUsers()),
+                    c.getAdultLiteracyRate() == null ? "--" : String.format("%.2f", c.getAdultLiteracyRate()));
+        }
+        System.out.format("+------+--------------------------------+----------------+----------+%n");
+
     }
 
 
