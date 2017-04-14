@@ -9,5 +9,15 @@ import java.util.List;
  */
 public interface CountryDao {
 
-    List<Country> fetchAllContacts();
+    List<Country> fetchAllCountries();
+
+    void update(Country country);
+
+    void save(Country country);
+
+    void delete(Country country);
+
+    Country fetchCountry(String name);
+
+
 }

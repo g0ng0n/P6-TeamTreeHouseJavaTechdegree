@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class CountryDaoImpl implements CountryDao{
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Country> fetchAllContacts() {
+    public List<Country> fetchAllCountries() {
         // Open session
         Session session = sessionFactory.openSession();
 
@@ -42,5 +43,51 @@ public class CountryDaoImpl implements CountryDao{
         // Close session
         session.close();
         return countries;
+    }
+
+
+    @Override
+    public void update(Country country) {
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.merge(country);
+        session.getTransaction().commit();
+        session.close();
+
+    }
+
+    @Override
+    public void save(Country country) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(country);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public void delete(Country country) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(country);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public Country fetchCountry(String name) {
+
+        // Open session
+        Session session = sessionFactory.openSession();
+
+        // Create a criteria Object
+        Criteria criteria = session.createCriteria(Country.class)
+                .add(Restrictions.eq("name",name));
+
+        Country result = (Country) criteria.uniqueResult();
+        // Close session
+        session.close();
+        return result;
     }
 }
