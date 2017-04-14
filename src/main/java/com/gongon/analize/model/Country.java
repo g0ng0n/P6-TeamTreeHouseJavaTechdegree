@@ -5,7 +5,6 @@ import com.sun.istack.internal.NotNull;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
 /**
  * Created by g0ng0n.
@@ -25,11 +24,11 @@ public class Country {
 
     @Column
     @Digits(integer=11, fraction=8)
-    private BigDecimal internetUsers;
+    private Float internetUsers;
 
     @Column
     @Digits(integer=11, fraction=8)
-    private BigDecimal adultLiteracyRate;
+    private Float adultLiteracyRate;
 
     // default constructor
     public Country(){
@@ -60,11 +59,11 @@ public class Country {
         this.name = name;
     }
 
-    public BigDecimal getInternetUsers() {
+    public Float getInternetUsers() {
         return internetUsers;
     }
 
-    public BigDecimal getAdultLiteracyRate() {
+    public Float getAdultLiteracyRate() {
         return adultLiteracyRate;
     }
 
@@ -86,9 +85,9 @@ public class Country {
 
         private String name;
 
-        private BigDecimal internetUsers;
+        private Float internetUsers;
 
-        private BigDecimal adultLiteracyRate;
+        private Float adultLiteracyRate;
 
         public CountryBuilder(String code){
             this.code = code;
@@ -100,12 +99,12 @@ public class Country {
             return this;
         }
 
-        public CountryBuilder withInternetUsers(BigDecimal internetUsers){
+        public CountryBuilder withInternetUsers(Float internetUsers){
             this.internetUsers = internetUsers;
             return this;
         }
 
-        public CountryBuilder withAdultLiteracyRate( BigDecimal adultLiteracyRate){
+        public CountryBuilder withAdultLiteracyRate( Float adultLiteracyRate){
             this.adultLiteracyRate = adultLiteracyRate;
             return this;
         }
