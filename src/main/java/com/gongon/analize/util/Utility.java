@@ -1,11 +1,17 @@
 package com.gongon.analize.util;
 
+import com.gongon.analize.model.Country;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.h2.util.StringUtils;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
- * Created by gonzalo.gisbert on 14/04/17.
+ * Created by g0ng0n.
  */
 public class Utility {
 
@@ -58,16 +64,16 @@ public class Utility {
         return true;
     }
 
-    public Float checkFloat(String input){
+    public Double checkDouble(String input){
         Boolean valid;
-        Float value = null;
+        Double value = null;
         do{
             if (input.isEmpty()){
                 value = null;
                 valid = true;
             }else{
                 if (StringUtils.isNumber(input)){
-                    value = Float.parseFloat(input);
+                    value = Double.parseDouble(input);
                     valid = true;
                     if (value < 0 || value > 100) {
                         generateMessage("Value has to be in range from 0 to 100%nPlease try again:%n");
@@ -86,4 +92,35 @@ public class Utility {
         return value;
     }
 
+    public static List<Country> getCountriesWithIndicators(List<Country> countries) {
+
+            return countries.stream()
+                    .filter(country -> country.getInternetUsers() != null && country.getAdultLiteracyRate() != null)
+                    .collect(Collectors.toList());
+    }
+
+    public Country getCountryWithMinInternetUsers(List<Country> countries) {
+
+        return countries.stream()
+                .min(Comparator.comparingDouble(country -> country.getInternetUsers()))
+                .get();
+    }
+
+    public Country getCountryWithMaxInternetUsers(List<Country> countries) {
+        return countries.stream()
+                .max(Comparator.comparingDouble(country -> country.getInternetUsers()))
+                .get();
+    }
+
+    public Country getCountryWithMinLiteracyRate(List<Country> countries) {
+        return countries.stream()
+                .min(Comparator.comparingDouble(country -> country.getAdultLiteracyRate()))
+                .get();
+    }
+
+    public Country getCountryWithMaxLiteracyRate(List<Country> countries) {
+        return countries.stream()
+                .max(Comparator.comparingDouble(country -> country.getAdultLiteracyRate()))
+                .get();
+    }
 }

@@ -1,5 +1,6 @@
 package com.gongon.analize;
 
+import com.gongon.analize.controller.Prompter;
 import com.gongon.analize.dao.CountryDao;
 import com.gongon.analize.dao.implementation.CountryDaoImpl;
 import org.hibernate.Criteria;
@@ -20,7 +21,8 @@ public class Application {
 
     public static void main (String[] args){
 
-
+        Prompter prompter = new Prompter();
+        prompter.runApplication();
 
     }
 

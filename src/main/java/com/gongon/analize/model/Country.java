@@ -24,11 +24,11 @@ public class Country {
 
     @Column
     @Digits(integer=11, fraction=8)
-    private Float internetUsers;
+    private Double internetUsers;
 
     @Column
     @Digits(integer=11, fraction=8)
-    private Float adultLiteracyRate;
+    private Double adultLiteracyRate;
 
     // default constructor
     public Country(){
@@ -59,12 +59,12 @@ public class Country {
         this.name = name;
     }
 
-    public Float getInternetUsers() {
+    public Double getInternetUsers() {
         return internetUsers;
     }
 
-    public Float getAdultLiteracyRate() {
-        return adultLiteracyRate;
+    public Double getAdultLiteracyRate() {
+            return adultLiteracyRate;
     }
 
     @Override
@@ -85,9 +85,9 @@ public class Country {
 
         private String name;
 
-        private Float internetUsers;
+        private Double internetUsers;
 
-        private Float adultLiteracyRate;
+        private Double adultLiteracyRate;
 
         public CountryBuilder(String code){
             this.code = code;
@@ -99,12 +99,12 @@ public class Country {
             return this;
         }
 
-        public CountryBuilder withInternetUsers(Float internetUsers){
+        public CountryBuilder withInternetUsers(Double internetUsers){
             this.internetUsers = internetUsers;
             return this;
         }
 
-        public CountryBuilder withAdultLiteracyRate( Float adultLiteracyRate){
+        public CountryBuilder withAdultLiteracyRate( Double adultLiteracyRate){
             this.adultLiteracyRate = adultLiteracyRate;
             return this;
         }

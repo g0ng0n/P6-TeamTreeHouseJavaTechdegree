@@ -2,6 +2,7 @@ package com.gongon.analize.dao.implementation;
 
 import com.gongon.analize.dao.CountryDao;
 import com.gongon.analize.model.Country;
+import com.gongon.analize.util.Utility;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,10 +11,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Created by gonzalo.gisbert on 12/04/17.
+ * Created by g0ng0n.
  */
 public class CountryDaoImpl implements CountryDao{
 
@@ -89,5 +92,23 @@ public class CountryDaoImpl implements CountryDao{
         // Close session
         session.close();
         return result;
+    }
+
+    @Override
+    public List<Double> getAdultLiteracyRateFromCountries() {
+        List<Double>literacyRates = new ArrayList<>();
+
+
+        Utility.getCountriesWithIndicators(this.fetchAllCountries()).forEach(country ->
+                literacyRates.add(country.getAdultLiteracyRate()));
+        return literacyRates;
+    }
+
+    @Override
+    public List<Double> getInternetUsersFromCountries() {
+        List<Double>internetUsageList = new ArrayList<>();
+        Utility.getCountriesWithIndicators(this.fetchAllCountries()).forEach(country ->
+                internetUsageList.add(country.getInternetUsers()));
+        return internetUsageList;
     }
 }

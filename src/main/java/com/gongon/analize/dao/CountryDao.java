@@ -4,8 +4,9 @@ import com.gongon.analize.model.Country;
 
 import java.util.List;
 
+
 /**
- * Created by gonzalo.gisbert on 12/04/17.
+ * Created by g0ng0n.
  */
 public interface CountryDao {
 
@@ -18,6 +19,10 @@ public interface CountryDao {
     void delete(Country country);
 
     Country fetchCountry(String name);
+
+    List<Double> getAdultLiteracyRateFromCountries();
+    List<Double> getInternetUsersFromCountries();
+
 
 
 }

@@ -4,14 +4,14 @@ import com.gongon.analize.dao.CountryDao;
 import com.gongon.analize.dao.implementation.CountryDaoImpl;
 import com.gongon.analize.model.Country;
 import com.gongon.analize.util.Utility;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
-import javax.rmi.CORBA.Util;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by gonzalo.gisbert on 12/04/17.
+ * Created by g0ng0n.
  */
 public class Prompter {
 
@@ -41,7 +41,7 @@ public class Prompter {
                 showAllContacts();
                 break;
             case 2:
-                promptIndicatorStatistics();
+                getStatistics();
                 break;
             case 3:
                 editCountry();
@@ -61,7 +61,25 @@ public class Prompter {
         }
     }
 
+    private void getStatistics() {
 
+        List<Country> countries = util.getCountriesWithIndicators(dao.fetchAllCountries());
+
+        Utility.generateMessage("Correlation Coefficient = %.6f%n", new PearsonsCorrelation().correlation(
+                ArrayUtils.toPrimitive( dao.getAdultLiteracyRateFromCountries().toArray(new Double[dao.getAdultLiteracyRateFromCountries().size()])),
+                ArrayUtils.toPrimitive( dao.getInternetUsersFromCountries().toArray(new Double[dao.getInternetUsersFromCountries().size()]))));
+
+        Country countryWithMinInternetUsers = util.getCountryWithMinInternetUsers(countries);
+        Utility.generateMessage("The country with the Minimum Internet Users is = %s %n", countryWithMinInternetUsers.getName());
+        Country countryWithMaxInternetUsers = util.getCountryWithMaxInternetUsers(countries);
+        Utility.generateMessage("The country with the Max Internet Users is = %s %n", countryWithMinInternetUsers.getName());
+
+        Country countryWithMinLiteracyRate = util.getCountryWithMinLiteracyRate(countries);
+        Utility.generateMessage("The country with the Minimum Literacy Rate22 is = %s %n", countryWithMinInternetUsers.getName());
+        Country countryWithMaxLiteracyRate = util.getCountryWithMaxLiteracyRate(countries);
+        Utility.generateMessage("The country with the Max Literacy Rate  is = %s %n", countryWithMinInternetUsers.getName());
+
+    }
 
 
     private void showAllContacts(){
@@ -97,10 +115,10 @@ public class Prompter {
         String name = util.validateStringInput(scanner.nextLine());
 
         Utility.generateMessage("Enter Country internet users indicator:%n");
-        Float internetUsers = util.checkFloat(scanner.nextLine());
+        Double internetUsers = util.checkDouble(scanner.nextLine());
 
         Utility.generateMessage("Enter Country adult literacy rate:%n");
-        Float adultLiteracyRate =  util.checkFloat(scanner.nextLine());
+        Double adultLiteracyRate =  util.checkDouble(scanner.nextLine());
 
         Country country = new Country.CountryBuilder(code)
                 .withName(name)
@@ -155,10 +173,10 @@ public class Prompter {
             String name = util.validateStringInput(scanner.nextLine());
 
             Utility.generateMessage("Enter Country internet users indicator:%n");
-            Float internetUsers = util.checkFloat(scanner.nextLine());
+            Double internetUsers = util.checkDouble(scanner.nextLine());
 
             Utility.generateMessage("Enter Country adult literacy rate:%n");
-            Float adultLiteracyRate =  util.checkFloat(scanner.nextLine());
+            Double adultLiteracyRate =  util.checkDouble(scanner.nextLine());
 
             Country countryToUpdate = new Country.CountryBuilder(code)
                     .withName(name)
